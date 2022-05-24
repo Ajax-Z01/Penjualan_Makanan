@@ -1,6 +1,7 @@
 <?php
 
-class Database{
+class Database
+{
 	private $host = DB_HOST;
 	private $user = DB_USER;
 	private $pass = DB_PASS;
@@ -11,16 +12,16 @@ class Database{
 
 	public function __construct()
 	{
-		$dsn = 'mysql:host='. $this->host .';dbname='. $this->dbnm;
+		$dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbnm;
 
 		$option = [
 			PDO::ATTR_PERSISTENT => true,
 			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
 		];
 
-		try{
-			$this->dbh = new PDO($dsn,$this->user,$this->pass, $option);
-		}catch(PDOException $e){
+		try {
+			$this->dbh = new PDO($dsn, $this->user, $this->pass, $option);
+		} catch (PDOException $e) {
 			die($e->getMessage());
 		}
 	}
@@ -31,8 +32,9 @@ class Database{
 		$this->stmt = $this->dbh->prepare($query);
 	}
 
-	public function bind($param, $value, $type = null){
-		if(is_null($type)){
+	public function bind($param, $value, $type = null)
+	{
+		if (is_null($type)) {
 			switch (true) {
 				case is_int($value):
 					$type = PDO::PARAM_INT;
@@ -73,4 +75,3 @@ class Database{
 		return $this->stmt->rowCount();
 	}
 }
-
